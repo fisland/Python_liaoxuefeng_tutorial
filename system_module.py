@@ -142,10 +142,10 @@ parser.Parse(xml)
 # 爬虫的时候用得着
 from html.parser import HTMLParser
 from html.entities import name2codepoint
+
 import io
 import sys
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='utf8')
-
 class myHTMLParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         print('<%s>', tag)
@@ -184,32 +184,41 @@ class myHTMLParser(HTMLParser):
 
 
 # 作业，解析出时间 地址 名称
+
+
 class Python_event_HTMLParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
-        print('<%s>', tag)
-    
-    def handle_endtag(self, tag):
-        print('<%s>',tag)
+        def _attr(attrlist, attrname):
+            for i in attrlist:
+                if attrname == i[0]:
+                    return i[1]
+            return None
 
-    def handle_startendtag(self, tag, attrs):
-        print('<%s/>' % tag)
+        if tag == 'h3' and _attr(attrs,'class') == 'event-title':
+            self.in_title = True
 
     def handle_data(self, data):
-        print(data)
+        if self.in_title:
+            self.event_title.append(data)
+            self.in_title = False
 
-    def handle_comment(self, data):
-        print('<!--', data, '-->')
 
-    def handle_entityref(self, name):
-        name = chr(name2codepoint[name])
-        print('&%s;' % name)
+    def __init__(self):
+        HTMLParser.__init__(self)
+        self.event_time = []
+        self.event_title = []
+        self.event_location = []
+        self.in_time = False
+        self.in_title = False
+        self.in_location = False
 
-    def handle_charref(self, name):
-        if name.startswith('x'):
-            name = chr(int(name[1:], 16))
-        else:
-            name = chr(int(name))
-        print('&#%s;' % name)
+if __name__ == '__main__':
+    parser_event = Python_event_HTMLParser()
+    with open('/Users/fisland/Documents/GitHub/Python_liaoxuefeng_tutorial/Events _ Python.org.html') as f:
+        htmltext = f.read()
+        parser_event.feed(htmltext)
+    for i in range(len(parser_event.event_title)):
+        print(parser_event.event_title[i])
 
 # urllib
 # 请求 get post
