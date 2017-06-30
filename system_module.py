@@ -1,4 +1,6 @@
 # Datetime
+# coding:utf-8
+
 from datetime import datetime
 
 # 获取当前
@@ -51,3 +53,165 @@ Point = namedtuple('Point', ['x', 'y'])
 
 p = Point(1, 2)
 print(p.y)
+print(isinstance(p, tuple))
+Circle = namedtuple('Circle', ['x', 'y', 'r'])
+
+# deque
+# deque 是为了高效实现插入和删除操作的双向列表，适合用于队列和张
+from collections import deque
+q = deque(['a', 'b', 'c'])
+q.append('x')
+q.appendleft('y')
+print(q)
+
+# defaultDict
+from collections import defaultdict
+dd = defaultdict(lambda:'N/A')
+dd['key1'] = 'abc'
+print(dd['key1'])
+print(dd['key2'])
+# 默认值是调用函数返回的，而函数在创建defaultdict对象时候传
+# 除了key不存在的时候返回默认值，其他时候与dict行为一样
+
+# 如果要保持dict顺序，可以使用orderdict
+from collections import OrderedDict
+d = dict([('a',1),('b',2),('c',3)])
+print(d)
+
+od = OrderedDict([('a',1),('b',2),('c',3)])
+print(od)
+# 按照插入顺序排序，而不是key本身
+# 可以实现个FIFO模型 。
+
+# counter 计数器
+from collections import Counter 
+c = Counter()
+
+for ch in 'Programming':
+    c[ch] = c[ch] + 1
+
+print(c)
+
+# base64
+# Base64是一种用64个字符来表示任意二进制数据的方法。
+
+# struct
+# 解决byts和其他二进制数据类型转换
+
+# hashlib
+# md5 摘要算法
+
+# itertools
+# 操作迭代对象
+
+# contextlib
+# 上下文 with
+
+# XML
+# 操作XML两种方法，DOM（读入内存，树结构，比较大）和SAX（流媒体，边读边解析）
+# 3个函数， 使用sax解析xml
+# start_element end_element char_data
+from xml.parsers.expat import ParserCreate
+
+class DefaultSaxHandler(object):
+    def start_element(self, name, attrs):
+        print('sax:start_element: %s, attrs: %s' % (name, str(attrs)))
+    
+    def end_element(self, name):
+        print('sax:end_element:%s' % name)
+    
+    def char_data(self, text):
+        print('sax:char_data: %s' % text)
+
+xml = r'''<?xml version="1.0"?>
+<ol>
+    <li><a href="/python">Python</a></li>
+    <li><a href="/ruby">Ruby</a></li>
+</ol>
+'''
+
+handler = DefaultSaxHandler()
+parser  = ParserCreate()
+parser.StartElementHandler = handler.start_element
+parser.EndElementHandler = handler.end_element
+parser.CharacterDataHandler = handler.char_data
+
+parser.Parse(xml)
+
+# HTMLParser
+# 爬虫的时候用得着
+from html.parser import HTMLParser
+from html.entities import name2codepoint
+import io
+import sys
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='utf8')
+
+class myHTMLParser(HTMLParser):
+    def handle_starttag(self, tag, attrs):
+        print('<%s>', tag)
+    
+    def handle_endtag(self, tag):
+        print('<%s>',tag)
+
+    def handle_startendtag(self, tag, attrs):
+        print('<%s/>' % tag)
+
+    def handle_data(self, data):
+        print(data)
+
+    def handle_comment(self, data):
+        print('<!--', data, '-->')
+
+    def handle_entityref(self, name):
+        name = chr(name2codepoint[name])
+        print('&%s;' % name)
+
+    def handle_charref(self, name):
+        if name.startswith('x'):
+            name = chr(int(name[1:], 16))
+        else:
+            name = chr(int(name))
+        print('&#%s;' % name)
+
+# parser_html = myHTMLParser()
+# parser_html.feed('''<html>
+# <head></head>
+# <body>
+# <!-- test html parser -->
+#     <p>Some <a href=\"#\">html</a> HTML&nbsp;tutorial...<br>END</p>
+# </body></html>''')
+
+
+
+# 作业，解析出时间 地址 名称
+class Python_event_HTMLParser(HTMLParser):
+    def handle_starttag(self, tag, attrs):
+        print('<%s>', tag)
+    
+    def handle_endtag(self, tag):
+        print('<%s>',tag)
+
+    def handle_startendtag(self, tag, attrs):
+        print('<%s/>' % tag)
+
+    def handle_data(self, data):
+        print(data)
+
+    def handle_comment(self, data):
+        print('<!--', data, '-->')
+
+    def handle_entityref(self, name):
+        name = chr(name2codepoint[name])
+        print('&%s;' % name)
+
+    def handle_charref(self, name):
+        if name.startswith('x'):
+            name = chr(int(name[1:], 16))
+        else:
+            name = chr(int(name))
+        print('&#%s;' % name)
+
+# urllib
+# 请求 get post
+
+

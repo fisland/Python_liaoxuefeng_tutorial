@@ -1,15 +1,16 @@
-#coding:utf-8
-from function import my_abs
+# coding:utf-8
+
+# from function import my_abs
 print("hello world")
 
 # 数据类型和变量
 
 # 字符串和编码
 
-print ("包含中文的str")
-print (len("ABC123"))
+# print ("包含中文的str")
+# print (len("ABC123"))
 
-print(len('中文'))
+# print(len('中文'))
 
 print('hi,%s,you havd $%d' % ("peter",10000))
 
@@ -31,55 +32,55 @@ print ('小明去年成绩：%d,今年成绩：%d,提升了百分点：%02.2f%%'
 
 #使用list 和 tuple
 classmate = ["peter","sue","ane"]
-print classmate
-print len(classmate)
-print classmate[0]
-print classmate[-1]
+print (classmate)
+print (len(classmate))
+print (classmate[0])
+print (classmate[-1])
 classmate.append("adam")
-print classmate
+print (classmate)
 classmate.insert(1,"ken")
-print classmate
+print (classmate)
 classmate.pop()
-print classmate
+print (classmate)
 classmate.pop(1)
-print classmate
+print (classmate)
 classmate[1] = "Sarch"
-print classmate
+print (classmate)
 # list 里面数据可以不同类型
 L = ["ABC",1,True]
 # list 可以多维数组
 s = ["A","b",["d","e"],"F"]
-print s
-print s[2][1]
+print (s)
+print (s[2][1])
 L = []
-print "L:%s" % L
+print ("L:%s" % L)
 
 #tuple 元祖
 # 不可变的数组 指向不变
 t = (1,2)
-print t
+# print t
 
 # ps 注意
 # 如果只有一个元素的元祖，不使用“，”来消除歧义，那定义的是元祖里面的具体东西，而不是元祖
 # t1 = (1)
 t1 = (1,)
-print t1
+# print t1
 
 Languages = [
     [["Apple"],["Google"],["MS"]],
     [["OC"],["GO"],["Python"]],
     [["1"],["2"],["3"]]
 ]
-print Languages[1][2]
+print(Languages[1][2])
 
 #条件控制
 age = 10
 if age>18:
-    print "adult"
+    print ("adult")
 elif age>6:
-    print "teenager"
+    print ("teenager")
 else:
-    print "kid"
+    print ("kid")
 
 '''
 if x:
@@ -88,16 +89,15 @@ if x:
 '''
 
 # 再议input
-'''
 birth = input('birth:')
+birth = int(birth)
 if birth < 2000:
-    print "00前"
+    print ("00前")
 else:
-    print "00后"
+    print ("00后")
 
-print "00"
+
 '''
-
 # 循环
 sum1 = 0
 for i in range(101):
@@ -152,7 +152,7 @@ print a
 a_str = 'abc'
 a_str_1 = a_str.replace('a','D')
 print a_str_1
-
+'''
 '''
 总结：
 list [] 可变
@@ -162,4 +162,4 @@ set set([]) 不可变
 '''
 
 
-print ("my_abs -100 %d" % my_abs(-100))
+# print ("my_abs -100 %d" % my_abs(-100))
