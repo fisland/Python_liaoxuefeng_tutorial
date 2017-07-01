@@ -196,11 +196,22 @@ class Python_event_HTMLParser(HTMLParser):
 
         if tag == 'h3' and _attr(attrs,'class') == 'event-title':
             self.in_title = True
+        if tag == 'time':
+            self.in_time = True
+        if  tag == 'span' and _attr(attrs,'class') == 'event-location':
+            self.in_location = True
+            
 
     def handle_data(self, data):
         if self.in_title:
             self.event_title.append(data)
             self.in_title = False
+        if self.in_time:
+            self.event_time.append(data)
+            self.in_time = False
+        if self.in_location:
+            self.event_location.append(data)
+            self.in_location = False
 
 
     def __init__(self):
@@ -214,11 +225,11 @@ class Python_event_HTMLParser(HTMLParser):
 
 if __name__ == '__main__':
     parser_event = Python_event_HTMLParser()
-    with open('/Users/fisland/Documents/GitHub/Python_liaoxuefeng_tutorial/Events _ Python.org.html') as f:
+    with open('Events _ Python.org.html') as f:
         htmltext = f.read()
         parser_event.feed(htmltext)
     for i in range(len(parser_event.event_title)):
-        print(parser_event.event_title[i])
+        print('time %s at location %s, the event %s' % (parser_event.event_time[i], parser_event.event_location[i],     parser_event.event_title[i]))
 
 # urllib
 # 请求 get post
